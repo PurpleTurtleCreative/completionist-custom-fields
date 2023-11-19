@@ -1,0 +1,16 @@
+.completionist-custom-fields table {
+	border: 2px solid #d9e2ec;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.completionist-custom-fields table th,
+.completionist-custom-fields table td {
+	border: 1px solid #d9e2ec;
+	padding: 0.5em;
+}
+
+.completionist-custom-fields table th {
+	font-weight: 600;
+	background: #f0f4f8;
+}

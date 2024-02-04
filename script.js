@@ -26,8 +26,41 @@ window.Completionist.hooks.addFilter(
 	}
 );
 
-// Render the custom fields on the frontend.
+// Render key custom fields in TaskListItem main row,
+// to display when the task is collapsed.
+window.Completionist.hooks.addFilter(
+	'TaskListItem_main_row_content',
+	'completionist-custom-fields',
+	( content, task ) => {
 
+		if ( task?.custom_fields?.length ) {
+
+			// Define desired fields to display.
+			const keyFieldNames = [
+				'Task Type',
+				'SEO Impact',
+			];
+
+			const keyFields = task.custom_fields.filter(
+				field => keyFieldNames.includes( field?.name )
+			).map(
+				field => window.wp.element.createElement(
+					'p',
+					{ className: 'completionist-custom-field-badge' },
+					`${field?.name}: ${field?.display_value ?? '–'}`
+				)
+			);
+
+			// Insert the custom fields after the task name.
+			content.splice( 1, 0, ...keyFields );
+		}
+
+		return content;
+	}
+);
+
+// Add table of custom fields after the task description,
+// to display when the task is expanded.
 window.Completionist.hooks.addFilter(
 	'TaskListItem_content_after_description',
 	'completionist-custom-fields',
@@ -69,7 +102,7 @@ window.Completionist.hooks.addFilter(
 				}
 			);
 
-			content.push(node);
+			content.push( node );
 		}
 
 		return content;
